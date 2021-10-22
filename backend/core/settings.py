@@ -2,14 +2,17 @@
 Django settings for core project.
 """
 
-from pathlib import Path
 from .utils import get_secret
+from pathlib import Path
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = get_secret('SECRET_KEY')
 
 DEBUG = True
+
+BACKEND_URL = get_secret('BACKEND_URL')
 
 ALLOWED_HOSTS = []
 
@@ -24,6 +27,9 @@ INSTALLED_APPS = [
     # Packages
     'rest_framework',
     'djoser',
+
+    # Apps
+    'apps.galery',
 ]
 
 MIDDLEWARE = [
@@ -89,5 +95,9 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
