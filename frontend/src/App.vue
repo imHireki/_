@@ -2,7 +2,7 @@
   <div id="wrapper">
 
     <!-- NAVBAR -->
-    <nav class="navbar is-light" role="navigation" aria-label="main navigation">
+    <nav class="navbar is-light is-fixed-top" role="navigation" aria-label="main navigation">
 
       <!-- NAVBAR BRAND -->
       <div class="navbar-brand">
@@ -33,12 +33,12 @@
           <form method="get" action="/search" class="field-body">
             <div class="field has-addons">
               <div class="control is-expanded">
-                <input class="input" type="text"
+                <input class="input is-rounded" type="text"
                        placeholder="What awesome icons you'd like to see today? 😁"
                        >
               </div>
               <div class="control has-icons-right">
-                <button class="button">
+                <button class="button is-rounded">
                 <span class="icon"><i class="fa fa-search"></i></span>
                 </button>
               </div>
