@@ -3,6 +3,8 @@ from django.utils.text import slugify
 from django.conf import settings
 from django.db import models
 
+from .utils import create_slug 
+
 
 user = get_user_model()
 CASCADE = models.CASCADE
@@ -11,14 +13,14 @@ BACKEND_URL = settings.BACKEND_URL
 
 class Icon(models.Model):
     # Image 
-    name = models.CharField(max_length=30, blank=True)
+    name = models.CharField(max_length=30)
     image = models.ImageField(upload_to='uploads/icons/%Y/%m/')
-    slug = models.SlugField(blank=True)
 
-    # User
+    # Owner
     user = models.ForeignKey(to=user, on_delete=CASCADE)
 
-    # Time
+    # Auto
+    slug = models.SlugField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     
     # Attributes
@@ -40,14 +42,13 @@ class Icon(models.Model):
         return f'{BACKEND_URL}{self.image.url}'
 
     def save(self, *args, **kwargs):
-        super(Icon, self).save(*args, **kwargs)
+
+        if not self.name:
+            self.name = self.image.name
+        
+        super(Icon, self).save(*args, **kwargs) 
         
         if not self.slug:
-            self.slug = self.create_slug(self.slug, self.id)
+            self.slug = create_slug(self.name, self.id)
             self.save()
-
-    def create_slug(slug:str, pk=int):
-        _slug = slugify(slug)
-        slug_id = f'{_slug}-{pk}' 
-        return slug_id
 
