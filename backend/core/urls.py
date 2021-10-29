@@ -17,6 +17,8 @@ urlpatterns = [
     #TODO: REMOVE! DEV ONLY!
     path('api-auth/', include('rest_framework.urls')),
 
+    path('api/v1/', include('apps.galery.urls')),
+
     # MEDIA: Bind media URL to its files 
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
