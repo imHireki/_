@@ -10,14 +10,13 @@
       </div>
 
 
-      <div class="column is-3">
+      <div class="column is-3" v-for="icon in latestIcons.results" :key="icon.id">
 
+            <figure class="image is-256x256">
+              <img class="is-rounded" :src="icon.get_image">
+            </figure>
 
-              <figure class="image is-256x256">
-                <img class="is-rounded" src="https://bulma.io/images/placeholders/256x256.png">
-              </figure>
-
-              <p class="is-size-6 has-text-grey m-2">Image name pipipi popopo</p>
+            <p class="is-size-6 has-text-grey m-2">{{ icon.name }}</p>
 
 
           <div class="columns">
@@ -27,10 +26,9 @@
               </figure>
             </div>
             <div class="column has-text-left mt-1">
-              <p class="is-size-6 has-text-grey ">by Hireki</p>
+              <p class="is-size-6 has-text-grey">{{ icon.get_username }}</p>
             </div>
           </div>
-
 
       </div>
 
@@ -39,7 +37,33 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
-  name: 'Home',
+    name: 'Home',
+
+    data() {
+        return {
+            latestIcons: []
+        }
+    },
+
+    mounted() {
+        this.getLatestIcons()
+    },
+
+    methods: {
+        async getLatestIcons() {
+            await axios
+            .get('api/v1/icons/')
+            .then(response => {
+                console.log(response.data)
+                this.latestIcons = response.data
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        }
+    } 
 }
 </script>
