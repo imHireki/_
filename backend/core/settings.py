@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     # Packages
     'rest_framework',
     'debug_toolbar',
+    'corsheaders',
     'djoser',
 
     # Apps
@@ -36,8 +37,13 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     # Debug Toolbar Middleware
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+
+    # Cors Headers Middleware
+    "corsheaders.middleware.CorsMiddleware",
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -109,3 +115,6 @@ INTERNAL_IPS = [
     '127.0.0.1',
     ]
 
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8080',
+    ]
