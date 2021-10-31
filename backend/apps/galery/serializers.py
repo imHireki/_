@@ -1,3 +1,7 @@
+"""
+app galery serializers
+    - IconSerializer
+"""
 from rest_framework.serializers import ModelSerializer
 
 from .models import Icon

@@ -1,5 +1,5 @@
 """
-App galery's utils
+app galery utils
 """
 from django.utils.text import slugify
 

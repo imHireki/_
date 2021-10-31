@@ -16,12 +16,13 @@ urlpatterns = [
     # Djoser
     path('auth/', include('djoser.urls')),
 
-    #TODO: REMOVE! DEV ONLY!
+    #TODO: REMOVE! rest framework auth 
     path('api-auth/', include('rest_framework.urls')),
 
-    # Debug Toolbar
+    #TODO: REMOVE! Debug Toolbar
     path('__debug__/', include(debug_toolbar.urls)),
 
+    # Api v1
     path('api/v1/', include('apps.galery.urls')),
 
     # MEDIA: Bind media URL to its files 

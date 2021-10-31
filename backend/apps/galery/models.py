@@ -1,3 +1,7 @@
+"""
+app galery Models
+    - Icon
+"""
 from django.contrib.auth import get_user_model
 from django.utils.text import slugify
 from django.conf import settings
