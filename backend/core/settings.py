@@ -32,6 +32,7 @@ INSTALLED_APPS = [
 
     # Apps
     'apps.galery',
+    'apps.account',
 ]
 
 MIDDLEWARE = [
@@ -118,3 +119,6 @@ INTERNAL_IPS = [
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:8080',
     ]
+
+AUTH_USER_MODEL = 'account.User'
+
