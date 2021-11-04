@@ -1,69 +1,127 @@
 <template>
-  <div class="page-home box is-rounded">
-    <div class="columns is-multiline">
+  <v-app id="inspire">
+    <v-system-bar app>
+      <v-spacer></v-spacer>
 
+      <v-icon>mdi-square</v-icon>
 
-      <div class="column is-12">
-        <h1 class="is-size-2 has-text-centered">
-          Latest Icons
-        </h1>
-      </div>
+      <v-icon>mdi-circle</v-icon>
 
+      <v-icon>mdi-triangle</v-icon>
+    </v-system-bar>
 
-      <div class="column is-3" v-for="icon in latestIcons.results" :key="icon.id">
+    <v-app-bar
+      app
+      clipped-right
+      flat
+      height="72"
+    >
+      <v-spacer></v-spacer>
 
-            <figure class="image is-256x256">
-              <img class="is-rounded" :src="icon.get_image">
-            </figure>
+      <v-responsive max-width="156">
+        <v-text-field
+          dense
+          flat
+          hide-details
+          rounded
+          solo-inverted
+        ></v-text-field>
+      </v-responsive>
+    </v-app-bar>
 
-            <p class="is-size-6 has-text-grey m-2">{{ icon.name }}</p>
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+      width="300"
+    >
+      <v-navigation-drawer
+        v-model="drawer"
+        absolute
+        color="grey lighten-3"
+        mini-variant
+      >
+        <v-avatar
+          class="d-block text-center mx-auto mt-4"
+          color="grey darken-1"
+          size="36"
+        ></v-avatar>
 
+        <v-divider class="mx-3 my-5"></v-divider>
 
-          <div class="columns">
-            <div class="column is-3 has-text-centered parent">
-              <figure class="image is-32x32 is-inline-block">
-                <img class="is-rounded" src="https://bulma.io/images/placeholders/32x32.png">
-              </figure>
-            </div>
-            <div class="column has-text-left mt-1">
-              <p class="is-size-6 has-text-grey">{{ icon.get_username }}</p>
-            </div>
-          </div>
+        <v-avatar
+          v-for="n in 6"
+          :key="n"
+          class="d-block text-center mx-auto mb-9"
+          color="grey lighten-1"
+          size="28"
+        ></v-avatar>
+      </v-navigation-drawer>
 
-      </div>
+      <v-sheet
+        color="grey lighten-5"
+        height="128"
+        width="100%"
+      ></v-sheet>
 
-    </div>
-  </div>
+      <v-list
+        class="pl-14"
+        shaped
+      >
+        <v-list-item
+          v-for="n in 5"
+          :key="n"
+          link
+        >
+          <v-list-item-content>
+            <v-list-item-title>Item {{ n }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-navigation-drawer
+      app
+      clipped
+      right
+    >
+      <v-list>
+        <v-list-item
+          v-for="n in 5"
+          :key="n"
+          link
+        >
+          <v-list-item-content>
+            <v-list-item-title>Item {{ n }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-main>
+      <!--  -->
+    </v-main>
+
+    <v-footer
+      app
+      color="transparent"
+      height="72"
+      inset
+    >
+      <v-text-field
+        background-color="grey lighten-1"
+        dense
+        flat
+        hide-details
+        rounded
+        solo
+      ></v-text-field>
+    </v-footer>
+  </v-app>
 </template>
 
 <script>
-import axios from 'axios'
-
-export default {
+  export default {
     name: 'Home',
-
-    data() {
-        return {
-            latestIcons: []
-        }
-    },
-
-    mounted() {
-        this.getLatestIcons()
-    },
-
-    methods: {
-        async getLatestIcons() {
-            await axios
-            .get('api/v1/icons/')
-            .then(response => {
-                console.log(response.data)
-                this.latestIcons = response.data
-            })
-            .catch(error => {
-                console.log(error)
-            })
-        }
-    } 
-}
+    data: () => ({ drawer: null }),
+  }
 </script>
