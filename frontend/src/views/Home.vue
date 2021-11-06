@@ -35,14 +35,17 @@
         hide-details
         rounded
         solo-inverted
+        placeholder="megumin"
         class="grey lighten-2"
       >
-        <v-icon
-          slot="append"
-          color="red accent-3"
-        >
-          mdi-magnify
-        </v-icon> 
+          <v-icon
+            slot="append"
+            color="red accent-3"
+            @click.stop="drawer = !drawer"
+          >
+            mdi-magnify
+          </v-icon> 
+
       </v-text-field>
       <!-- / SEARCH -->
 
@@ -103,79 +106,94 @@
 
     <!-- MAIN --> 
     <v-main class="pa-2">
-
-    <v-row no-gutters>
-      <v-col
-        v-for="icon in icons"
-        :key="icon.id"
-        cols="6"
-        md="4"
-        lg="3"
-        xl="2" 
-      >
-        <v-card
-          class="pa-2"
-          outlined
-          tile
+      <v-row no-gutters>
+        <v-col
+          v-for="icon in icons"
+          :key="icon.id"
+          cols="6"
+          md="4"
+          lg="3"
+          xl="2" 
         >
-          <v-card-title>
-            <v-img
-              class="elevation-6 rounded-circle"
-              alt=""
-              :src="icon.get_image"
-              :aspect-ratio="1/1"
-              contain
-            ></v-img>
-          </v-card-title>
 
-          <v-card-text
-            class="text-h5 font-weight-bold text-truncate"
-            style="max-width: 99%"
+          <v-card
+            class="pa-2"
+            outlined
+            tile
           >
-            {{ icon.name }}
-          </v-card-text>
+            <v-card-title>
+              <v-img
+                class="elevation-6 rounded-circle"
+                alt=""
 
-          <v-card-actions>
-            <v-list-item class="grow">
-              <v-list-item-avatar color="grey darken-3">
-                <v-img
-                  class="elevation-6"
-                  alt=""
-                  src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-                ></v-img>
-              </v-list-item-avatar>
-
-              <v-list-item-content>
-                <v-list-item-title>{{ icon.user.username }}</v-list-item-title>
-              </v-list-item-content>
-
-              <v-row
-                align="center"
-                justify="end"
+                :src="icon.get_image"
+                :aspect-ratio="1/1"
+                contain
               >
-                <v-icon class="mr-1" color="red">
-                  mdi-heart
-                </v-icon>
-                <span class="subheading mr-2">256</span>
+                <template v-slot:placeholder>
+                  <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                  >
+                    <v-progress-circular
+                      indeterminate
+                      color="red accent-3"
+                    ></v-progress-circular>
+                  </v-row>
+                </template> 
 
-                <span class="mr-1">·</span>
+              </v-img>
+            </v-card-title>
 
-                <v-icon class="mr-1" color="blue">
-                  mdi-share-variant
-                </v-icon>
+            <v-card-text
+              class="text-h5 font-weight-bold text-truncate"
+              style="max-width: 99%"
+            >
+              {{ icon.name }}
+            </v-card-text>
 
-                <span class="subheading">45</span>
-              </v-row>
+            <v-card-actions>
+              <v-list-item class="grow px-2">
+                <v-list-item-avatar color="grey darken-3">
+                  <v-img
+                    class="elevation-6"
+                    alt=""
+                    src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+                  ></v-img>
+                </v-list-item-avatar>
 
-            </v-list-item>
-          </v-card-actions>
+                <v-list-item-content>
+                  <v-list-item-title>{{ icon.user.username }}</v-list-item-title>
+                </v-list-item-content>
 
-        </v-card>
+                <v-row
+                  align="center"
+                  justify="end"
+                >
+                  <v-icon class="mr-1" color="red accent-3">
+                    mdi-heart
+                  </v-icon>
 
-      </v-col>
+                </v-row>
 
-    </v-row>
+              </v-list-item>
+            </v-card-actions>
+          </v-card>
 
+        </v-col>
+      </v-row>
+
+      <!-- INFINITE SCROLL LOAD -->
+      <v-row> 
+        <v-col class="text-center mt-5">
+          <v-progress-circular
+            indeterminate
+            color="red accent-3"
+          ></v-progress-circular>
+        </v-col>
+      </v-row>
+      <!-- / INFINITE SCROLL LOAD -->
 
     </v-main>
     <!-- \ MAIN -->
@@ -200,8 +218,6 @@
           mdi-forwardburger
         </v-icon>
       </v-btn>
-
-
     </v-footer>
     <!-- \ FOOTER -->
 
