@@ -195,18 +195,44 @@
       data() {
           return {
               drawer: null,
-              icons: []
+              icons: [],
+              page: 1,
+              hasNextPage: true,
           }
       },
-      created() {
-          axios
-          .get('http://127.0.0.1:8000/api/v1/icons/') 
-          .then(response => {
-              this.icons = response.data.results
-          })
-          .catch(error => {
-              console.log(error)
-          })
-      }
+      methods: {
+          async getIcons() {
+              await axios
+                .get(`http://127.0.0.1:8000/api/v1/icons/?page=${this.page}`)
+                .then(response => {
+                    for (let i = 0; i < response.data.results.length; i++) {
+                        this.icons.push(response.data.results[i])
+                    }
+                    if (!response.data.next) {
+                        this.hasNextPage = false
+                    }
+                }) 
+                .catch(error => {
+                    console.log(error)
+                })
+          },
+          getNextPage() {
+              window.onscroll = () => {
+                  let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight
+
+                  if (bottomOfWindow && this.hasNextPage) {
+                      this.page += 1
+                      this.getIcons()
+                  }
+
+              }        
+          } 
+      },
+      beforeMount() {
+          this.getIcons()
+      },
+      mounted() {
+          this.getNextPage()
+      },
   }
 </script>
