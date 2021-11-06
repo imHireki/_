@@ -6,19 +6,45 @@
       app
       clipped-right
       flat
+      hide-on-scroll
       height="72"
     >
-      <v-spacer></v-spacer>
+      <!-- TITLE -->
+      <v-toolbar-title
+        class="title mr-5">
+        <v-btn
+          class="ma-2"
+          text
+          icon
+        >
+          <v-icon
+            color="red accent-3"
+            x-large
+          >mdi-wizard-hat
+          </v-icon>
+        </v-btn>
 
-      <v-responsive max-width="156">
-        <v-text-field
-          dense
-          flat
-          hide-details
-          rounded
-          solo-inverted
-        ></v-text-field>
-      </v-responsive>
+        Yamerooo
+      </v-toolbar-title> 
+      <!-- / TITLE -->
+
+      <!-- SEARCH -->
+      <v-text-field
+        dense
+        flat
+        hide-details
+        rounded
+        solo-inverted
+        class="grey lighten-2"
+      >
+        <v-icon
+          slot="append"
+          color="red accent-3"
+        >
+          mdi-magnify
+        </v-icon> 
+      </v-text-field>
+      <!-- / SEARCH -->
 
     </v-app-bar>
     <!-- \ APP BAR -->
@@ -166,20 +192,15 @@
         icon
         class="mx-2"
         @click.stop="drawer = !drawer"
+        color="red accent-3"
       >
         <v-icon
           large
-          color="primary">mdi-forwardburger</v-icon>
+        >
+          mdi-forwardburger
+        </v-icon>
       </v-btn>
 
-      <v-text-field
-        background-color="grey lighten-1"
-        dense
-        flat
-        hide-details
-        rounded
-        solo
-      ></v-text-field>
 
     </v-footer>
     <!-- \ FOOTER -->
