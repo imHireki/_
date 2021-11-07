@@ -4,10 +4,9 @@
     <!-- APP BAR -->
     <v-app-bar
       app
-      clipped-right
-      flat
       hide-on-scroll
-      height="72"
+      flat
+      scroll-threshold="200"
     >
       <!-- TITLE -->
       <v-toolbar-title
