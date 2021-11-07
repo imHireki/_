@@ -110,47 +110,44 @@
           v-for="icon in icons"
           :key="icon.id"
           cols="6"
-          md="4"
+          md="3"
           lg="3"
           xl="2" 
         >
-
           <v-card
-            class="pa-2"
-            outlined
-            tile
+            class="pa-2 ma-1"
+            shaped
+            hover
           >
-            <v-card-title>
-              <v-img
-                class="elevation-6 rounded-circle"
-                alt=""
+            <v-img
+              class="rounded-circle"
+              alt=""
+              :src="icon.get_image"
+              :aspect-ratio="1/1"
+              contain
+            >
+              <template v-slot:placeholder>
+                <v-row
+                  class="fill-height ma-0"
+                  align="center"
+                  justify="center"
+                >
+                  <v-progress-circular
+                    indeterminate
+                    color="red accent-3"
+                  ></v-progress-circular>
+                </v-row>
+              </template> 
 
-                :src="icon.get_image"
-                :aspect-ratio="1/1"
-                contain
-              >
-                <template v-slot:placeholder>
-                  <v-row
-                    class="fill-height ma-0"
-                    align="center"
-                    justify="center"
-                  >
-                    <v-progress-circular
-                      indeterminate
-                      color="red accent-3"
-                    ></v-progress-circular>
-                  </v-row>
-                </template> 
+            </v-img>
 
-              </v-img>
-            </v-card-title>
-
-            <v-card-text
-              class="text-h5 font-weight-bold text-truncate"
+            <v-card-title
+              class="text-h5  text-truncate"
               style="max-width: 99%"
             >
               {{ icon.name }}
-            </v-card-text>
+            </v-card-title>
+
 
             <v-card-actions>
               <v-list-item class="grow px-2">
@@ -158,7 +155,7 @@
                   <v-img
                     class="elevation-6"
                     alt=""
-                    src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+                    src="https://via.placeholder.com/50"
                   ></v-img>
                 </v-list-item-avatar>
 
@@ -254,7 +251,7 @@
           },
           getNextPage() {
               window.onscroll = () => {
-                  let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight
+                  let bottomOfWindow = ( document.documentElement.scrollTop + ( window.innerHeight + ( window.innerHeight * 0.2 ) ) ) >= document.documentElement.offsetHeight
 
                   if (bottomOfWindow && this.hasNextPage) {
                       this.page += 1
