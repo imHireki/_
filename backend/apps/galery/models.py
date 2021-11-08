@@ -7,21 +7,25 @@ from django.utils.text import slugify
 from django.conf import settings
 from django.db import models
 
-from .utils import create_slug 
+from .utils import create_slug, resize
 
 
 user = get_user_model()
 CASCADE = models.CASCADE
 BACKEND_URL = settings.BACKEND_URL
-
+import sys
 
 class Icon(models.Model):
     # Image 
     name = models.CharField(max_length=30)
-    image = models.ImageField(upload_to='uploads/icons/%Y/%m/')
-
-    # Owner
     user = models.ForeignKey(to=user, on_delete=CASCADE)
+
+    # Image
+    image = models.ImageField(upload_to='icons/original/%Y/%m/')
+    small_image = models.ImageField(upload_to='icons/small/%Y/%m/', blank=True)
+ 
+    # TODO: get predominant color instead of lazy image
+    color = models.CharField(blank=True, max_length=10)
 
     # Auto
     slug = models.SlugField(blank=True)
@@ -41,17 +45,23 @@ class Icon(models.Model):
     def get_image(self):
         """
         return the url path of the image e.g.,
-        http://127.0.0.1:8000/media/uploads/icons/2021/01/img.jpeg'
+        http://127.0.0.1:8000/media/icons/2021/01/img.jpeg
         """
         return f'{BACKEND_URL}{self.image.url}'
 
-    def save(self, *args, **kwargs):
+    def get_small_image(self):
+        return f'{BACKEND_URL}{self.small_image.url}'
 
+    def save(self, *args, **kwargs):
         if not self.name:
             self.name = self.image.name
+
+        super().save(*args, **kwargs) 
         
-        super(Icon, self).save(*args, **kwargs) 
-        
+        if not self.small_image:
+            self.image, self.small_image = resize(self.image)
+            self.save()
+
         if not self.slug:
             self.slug = create_slug(self.name, self.id)
             self.save()
