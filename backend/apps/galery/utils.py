@@ -49,7 +49,7 @@ class ResizeIcon:
         # Get resized images | 70 = 15% loss, 80 = 9% clean
         original = self.resize_img(names[0], original=True, quality=70) 
         
-        small = self.resize_img(names[1], size=(200, 200), quality=75)
+        small = self.resize_img(names[1], size=(256, 256), quality=75)
 
         # remove original file
         os.remove(self.get_original_fp) 

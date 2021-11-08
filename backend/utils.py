@@ -34,7 +34,8 @@ def save_data(title, image, border, edit):
         name=title,
         image=image,
         has_border=border,
-        has_edit=edit
+        has_edit=edit,
+        color='ph',
         )
 
     icon.save()

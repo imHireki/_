@@ -122,7 +122,7 @@
             <v-img
               class="rounded-circle"
               alt=""
-              :src="icon.get_image"
+              :src="icon.get_small_image"
               :aspect-ratio="1/1"
               contain
             >
