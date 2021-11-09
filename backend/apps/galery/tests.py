@@ -41,11 +41,11 @@ def create_img():
 
 def get_img_file(name:str, form:str) -> object:
     """ Get the files from the testdir when they're requested """
-    # with Image.open(f'media/tests/{name}') as image:
+    with Image.open(f'media/tests/{name}') as image:
     # with Image.open(f'/home/hireki/Downloads/985055.png') as image:
-    with Image.open(f'/home/hireki/Downloads/985056.jpg') as image:
+    # with Image.open(f'/home/hireki/Downloads/985056.jpg') as image:
         img_io = BytesIO()
-        image.save(img_io, format='JPEG')
+        image.save(img_io, format=form)
         image_file = ImageFile(img_io, name=name)
     return image_file
 
@@ -54,7 +54,7 @@ class IconTestCase(TestCase):
     def setUp(self):
         # Create the test media dir
         if not os.path.exists('media/tests/'):
-            os.mkdir('media/tests/')
+            os.makedirs('media/tests/')
         
         # Create the images for the test dir
         create_img() if len(os.listdir('media/tests/')) == 0 else None
