@@ -29,6 +29,7 @@ class IconSerializer(ModelSerializer):
             'has_edit',
             'get_image',
             'get_small_image',
+            'color',
             'user'
             ]
 

@@ -121,6 +121,7 @@
           >
             <v-img
               class="rounded-circle"
+              :style="{'background-color': icon.color}"
               alt=""
               :src="icon.get_small_image"
               :aspect-ratio="1/1"
@@ -143,7 +144,7 @@
 
             <v-card-title
               class="text-h5  text-truncate"
-              style="max-width: 99%"
+              style="max-width: 100%"
             >
               {{ icon.name }}
             </v-card-title>
@@ -151,16 +152,16 @@
 
             <v-card-actions>
               <v-list-item class="grow px-2">
-                <v-list-item-avatar color="grey darken-3">
-                  <v-img
-                    class="elevation-6"
-                    alt=""
-                    src="https://via.placeholder.com/50"
-                  ></v-img>
+                <v-list-item-avatar
+                  :color="icon.color"
+                >
+                <!-- TODO: add avatar -->
                 </v-list-item-avatar>
 
                 <v-list-item-content>
-                  <v-list-item-title>{{ icon.user.username }}</v-list-item-title>
+                  <v-list-item-title>
+                    {{ icon.user.username }}
+                  </v-list-item-title>
                 </v-list-item-content>
 
                 <v-row
