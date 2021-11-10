@@ -21,15 +21,15 @@ class Icon(models.Model):
     user = models.ForeignKey(to=user, on_delete=CASCADE)
 
     # Image
-    image = models.ImageField(upload_to='icons/original/%Y/%m/')
-    small_image = models.ImageField(upload_to='icons/small/%Y/%m/', blank=True)
+    image = models.ImageField(upload_to='icons/full/%Y/%m/%d')
+    image_256x = models.ImageField(upload_to='icons/256x/%Y/%m/%d', blank=True)
  
     # TODO: get predominant color instead of lazy image
     color = models.CharField(blank=True, max_length=7)
 
     # Auto
     slug = models.SlugField(blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField() # handled manually
     
     # Attributes
     has_border = models.BooleanField(default=False)
@@ -45,13 +45,25 @@ class Icon(models.Model):
     def get_image(self):
         return f'{BACKEND_URL}{self.image.url}'
 
-    def get_small_image(self):
-        return f'{BACKEND_URL}{self.small_image.url}'
+    def get_image_256x(self):
+        return f'{BACKEND_URL}{self.image_256x.url}'
 
     def save(self, *args, **kwargs):
-        if not self.small_image:
-            self.image, self.small_image, self.color = scrap_image(self.image)
+        # TODO: add before_save()
+         
+        from datetime import datetime
+        from django.utils import timezone 
+    
+        time_now = datetime.now(tz=timezone.utc)
+        stime_now = datetime.strftime(time_now, '%H%M%S%f')
 
+        self.created_at = time_now 
+
+        if not self.image_256x:
+            self.image, self.image_256x, self.color = scrap_image(
+                image=self.image, time=stime_now
+                )
+        
         # TODO: maybe remove it
         if not self.name:
             self.name = self.image.name
