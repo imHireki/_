@@ -7,8 +7,7 @@ from django.utils.text import slugify
 from django.conf import settings
 from django.db import models
 
-from .utils.image import scrap_image
-from .utils.text import create_slug 
+from .utils.save import before_save
 
 user = get_user_model()
 CASCADE = models.CASCADE
@@ -49,29 +48,6 @@ class Icon(models.Model):
         return f'{BACKEND_URL}{self.image_256x.url}'
 
     def save(self, *args, **kwargs):
-        # TODO: add before_save()
-         
-        from datetime import datetime
-        from django.utils import timezone 
-    
-        time_now = datetime.now(tz=timezone.utc)
-        stime_now = datetime.strftime(time_now, '%H%M%S%f')
-
-        self.created_at = time_now 
-
-        if not self.image_256x:
-            self.image, self.image_256x, self.color = scrap_image(
-                image=self.image, time=stime_now
-                )
-        
-        # TODO: maybe remove it
-        if not self.name:
-            self.name = self.image.name
-
+        before_save(self)
         super().save(*args, **kwargs) 
-        
-        # TODO: Remove the need to save it twice
-        if not self.slug:
-            self.slug = create_slug(self.name, self.id)
-            self.save()
         

@@ -24,9 +24,12 @@ class ImageScraper:
         self.name = time
     
     @property
-    def time(time):
-        """ return the 'time.jpg' """
-        return f'{time}.jpg'
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        self._name = f'{value}.jpg'
 
     def setup(self):
         """ Manage the path the code will flow to resize """
