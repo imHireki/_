@@ -3,28 +3,52 @@ app galery serializers
     - IconSerializer
 """
 from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 
 from .models import Icon, IconImage
 
 from django.contrib.auth import get_user_model
 
-Owner = get_user_model()
+User = get_user_model()
 
 
 class IconOwnerSerializer(ModelSerializer):
     class Meta:
-        model = Owner
-        fields = ['username']
+        model = User
+        fields = [
+            'id',
+            'username',
+            ]
+
+        extra_kwargs = {
+            'username': {
+                'validators': [],
+                'required': False,
+                },
+            'id': {
+                'read_only': False,
+                }
+            }
 
 class IconImageSerializer(ModelSerializer):
     class Meta:
         model = IconImage
         fields = [
             'id',
+
+            'image',
+
             'get_image',
             'get_image_256x',
             'color',
             ]
+
+        # Image just to create
+        extra_kwargs = {
+            'image': {
+                'write_only': True
+                }
+            }
 
 class IconSerializer(ModelSerializer):
     user = IconOwnerSerializer() 
@@ -41,4 +65,40 @@ class IconSerializer(ModelSerializer):
             'user',
             'images',
             ]
+
+    def create(self, validated_data):
+        from datetime import datetime
+        from django.utils import timezone
+        from sys import stdout
+
+        # Time
+        time_now = datetime.now(tz=timezone.utc)
+        time_str = datetime.strftime(time_now, '%H%M%S%f')
+        datetime_str = datetime.strftime(time_now, '%Y%m%d%H%M%S%F')
+
+        # Images
+        images = validated_data.pop('images')
+
+        # User
+        uid = validated_data.pop('user').get('id')
+        user = User.objects.get(pk=uid) # TODO: check user
+        validated_data['user'] = user
+
+        # Create the Icon without any images
+        icon = Icon.objects.create(
+            **validated_data
+            ) 
+
+        # Create the ImageIcon for each image
+        IconImage.objects.bulk_create([
+            IconImage(
+                image=img,
+                icon=icon
+                )
+
+            for img_dict in images
+            for img in img_dict
+            ]) 
+         
+        return icon 
 

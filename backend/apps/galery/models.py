@@ -19,7 +19,7 @@ class Icon(models.Model):
 
     user = models.ForeignKey(to=user, on_delete=CASCADE)
 
-    created_at = models.DateTimeField() 
+    created_at = models.DateTimeField(auto_now_add=True) 
     slug = models.SlugField(blank=True)
 
     has_border = models.BooleanField(default=False)
@@ -31,6 +31,9 @@ class Icon(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
         
 
 class IconImage(models.Model):
