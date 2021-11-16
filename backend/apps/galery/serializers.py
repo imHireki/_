@@ -71,15 +71,16 @@ class IconSerializer(ModelSerializer):
         from django.utils import timezone
         from sys import stdout
 
-        # Time
+        # Get time
         time_now = datetime.now(tz=timezone.utc)
         time_str = datetime.strftime(time_now, '%H%M%S%f')
         datetime_str = datetime.strftime(time_now, '%Y%m%d%H%M%S%F')
+        validated_data['created_at'] = time_now
 
-        # Images
+        # Remove images
         images = validated_data.pop('images')
 
-        # User
+        # Get User
         uid = validated_data.pop('user').get('id')
         user = User.objects.get(pk=uid) # TODO: check user
         validated_data['user'] = user
@@ -100,5 +101,6 @@ class IconSerializer(ModelSerializer):
             for img in img_dict
             ]) 
          
+        stdout.write(str())
         return icon 
 
