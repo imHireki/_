@@ -17,7 +17,7 @@ BACKEND_URL = settings.BACKEND_URL
 class Icon(models.Model):
     name = models.CharField(max_length=30)
 
-    user = models.ForeignKey(to=user, on_delete=CASCADE)
+    user = models.OneToOneField(to=user, on_delete=CASCADE)
 
     created_at = models.DateTimeField(auto_now_add=True) 
     slug = models.SlugField(blank=True)

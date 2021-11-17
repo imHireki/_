@@ -35,9 +35,7 @@ class IconImageSerializer(ModelSerializer):
         model = IconImage
         fields = [
             'id',
-
             'image',
-
             'get_image',
             'get_image_256x',
             'color',
@@ -101,6 +99,5 @@ class IconSerializer(ModelSerializer):
             for img in img_dict
             ]) 
          
-        stdout.write(str())
         return icon 
 
