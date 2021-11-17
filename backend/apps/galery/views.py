@@ -5,6 +5,8 @@ from rest_framework.generics import ListCreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from django.http import Http404
+
 from .paginators import IconPagination
 from .serializers import IconSerializer, IconImageSerializer
 from .models import Icon, IconImage
@@ -17,8 +19,8 @@ class IconView(ListCreateAPIView):
 
 class IconImageView(APIView):
     def post(self, request, format=None):
-        image = request.data.get('image', None)
-        serializer = IconImageSerializer(data={'image': image})
+        # TODO: check the data 
+        serializer = IconImageSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)

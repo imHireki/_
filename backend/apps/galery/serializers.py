@@ -5,9 +5,12 @@ app galery serializers
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 
-from .models import Icon, IconImage
-
 from django.contrib.auth import get_user_model
+from django.utils import timezone
+
+from datetime import datetime
+
+from .models import Icon, IconImage
 
 User = get_user_model()
 
@@ -48,9 +51,31 @@ class IconImageSerializer(ModelSerializer):
                 }
             }
         
-    def create(self, validated_data):
-        print(validated_data)
-        return 
+    def create(self, validated_data):   
+        # TODO: add support on the serialier to all those fields
+        #       maybe different serializers...
+        # TODO: remove gap that the code could break
+        
+        user_id = validated_data.get('user_id', None)
+        icon_id = validated_data.get('icon_id', None)
+        name = validated_data.get('name', '')
+        image = validated_data.get('image', None)
+
+        created_at = datetime.now(tz=timezone.utc)
+        user = User.objects.filter(pk=user_id).first()
+
+        if not icon_id:
+            # create an icon | name / user / created_at 
+            # TODO: add support to has_border... 
+            Icon.objects.create(
+                name=name, user=user,
+                created_at=created_at
+                )
+            
+        # having an icon > get the icon > register the image
+        icon_obj = Icon.objects.filter(pk=icon_id).first()
+        icon_image = IconImage.objects.create(icon=icon_obj, image=image)
+        return icon_image
 
 class IconSerializer(ModelSerializer):
     user = IconOwnerSerializer() 
