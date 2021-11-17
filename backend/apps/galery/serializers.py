@@ -47,6 +47,10 @@ class IconImageSerializer(ModelSerializer):
                 'write_only': True
                 }
             }
+        
+    def create(self, validated_data):
+        print(validated_data)
+        return 
 
 class IconSerializer(ModelSerializer):
     user = IconOwnerSerializer() 

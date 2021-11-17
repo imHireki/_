@@ -15,3 +15,11 @@ class IconView(ListCreateAPIView):
     pagination_class = IconPagination 
     serializer_class = IconSerializer
 
+class IconImageView(APIView):
+    def post(self, request, format=None):
+        image = request.data.get('image', None)
+        serializer = IconImageSerializer(data={'image': image})
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
