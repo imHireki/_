@@ -8,8 +8,10 @@ from rest_framework.views import APIView
 from django.http import Http404
 
 from .paginators import IconPagination
-from .serializers import IconSerializer, IconImageSerializer
 from .models import Icon, IconImage
+
+from .serializers.image_upload import UploadIconImageSerializer
+from .serializers.icon_list import IconSerializer
 
 
 class IconView(ListCreateAPIView):
@@ -17,11 +19,7 @@ class IconView(ListCreateAPIView):
     pagination_class = IconPagination 
     serializer_class = IconSerializer
 
-class IconImageView(APIView):
-    def post(self, request, format=None):
-        # TODO: check the data 
-        serializer = IconImageSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
+class IconImageView(ListCreateAPIView):
+    queryset = IconImage.objects.all()
+    serializer_class = UploadIconImageSerializer
 
