@@ -1,3 +1,4 @@
+from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 from ..models import Icon, IconImage
 
@@ -5,7 +6,18 @@ from ..models import Icon, IconImage
 class UploadIconSerializer(ModelSerializer):
     class Meta:
         model = Icon
-        fields = '__all__'
+        fields = [
+            'id',
+            'name',
+            'created_at',
+            'slug',
+            'has_border',
+            'has_edit',
+            ]
+        extra_kwargs = {
+            'id': {'read_only': False},
+            'created_at': {'read_only': False},
+            }
 
 
 class UploadIconImageSerializer(ModelSerializer):
@@ -13,5 +25,8 @@ class UploadIconImageSerializer(ModelSerializer):
 
     class Meta:
         model = IconImage
-        fields = '__all__'
+        fields = [
+            'image',
+            'icon',
+            ] 
 
