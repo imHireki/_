@@ -1,7 +1,7 @@
 """
 app galery api views 
 """
-from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import ListAPIView, ListCreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -14,7 +14,7 @@ from .serializers.image_upload import UploadIconImageSerializer
 from .serializers.icon_list import IconSerializer
 
 
-class IconView(ListCreateAPIView):
+class IconView(ListAPIView):
     queryset = Icon.objects.all().select_related('user').prefetch_related('images')
     pagination_class = IconPagination 
     serializer_class = IconSerializer
