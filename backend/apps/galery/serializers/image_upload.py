@@ -1,32 +1,20 @@
 from rest_framework import serializers
-from rest_framework.serializers import ModelSerializer
 from ..models import Icon, IconImage
 
 
-class UploadIconSerializer(ModelSerializer):
-    class Meta:
-        model = Icon
-        fields = [
-            'id',
-            'name',
-            'created_at',
-            'slug',
-            'has_border',
-            'has_edit',
-            ]
-        extra_kwargs = {
-            'id': {'read_only': False},
-            'created_at': {'read_only': False},
-            }
+class UploadIconImageSerializer(serializers.Serializer):
+    iconimage_image = serializers.ImageField()
 
+    icon_id = serializers.IntegerField(required=False)
+    icon_user_id = serializers.IntegerField(required=False)
 
-class UploadIconImageSerializer(ModelSerializer):
-    icon = UploadIconSerializer()
-
-    class Meta:
-        model = IconImage
-        fields = [
-            'image',
-            'icon',
-            ] 
+    icon_name = serializers.CharField(max_length=30, required=False)
+    icon_has_border = serializers.BooleanField()
+    icon_has_edit = serializers.BooleanField()
+        
+    def create(self, validated_data):
+        # created_at = datetime.now(tz=timezone.utc)
+        # time_str = datetime.strftime(time_now, '%H%M%S%f')
+        # datetime_str = datetime.strftime(time_now, '%Y%m%d%H%M%S%F')
+        ...
 
