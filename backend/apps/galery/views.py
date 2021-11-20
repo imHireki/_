@@ -1,7 +1,7 @@
 """
 app galery api views 
 """
-from rest_framework.generics import ListAPIView, ListCreateAPIView
+from rest_framework.generics import ListAPIView, ListCreateAPIView, CreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -19,7 +19,7 @@ class IconView(ListAPIView):
     pagination_class = IconPagination 
     serializer_class = IconSerializer
 
-class IconImageView(ListCreateAPIView):
+class IconImageView(CreateAPIView):
     queryset = IconImage.objects.all()
     serializer_class = UploadIconImageSerializer
 

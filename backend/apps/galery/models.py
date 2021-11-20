@@ -16,12 +16,9 @@ BACKEND_URL = settings.BACKEND_URL
 
 class Icon(models.Model):
     name = models.CharField(max_length=30)
-
-    user = models.OneToOneField(to=user, on_delete=CASCADE)
-
+    user = models.ForeignKey(to=user, on_delete=CASCADE)
     created_at = models.DateTimeField(auto_now_add=True) 
     slug = models.SlugField(blank=True)
-
     has_border = models.BooleanField(default=False)
     has_edit = models.BooleanField(default=False) 
     
@@ -42,10 +39,8 @@ class IconImage(models.Model):
         related_name='images',
         on_delete=models.CASCADE,
         ) # Restrict ?
-
     image = models.ImageField(upload_to='icons/full/%Y/%m/%d')
     image_256x = models.ImageField(upload_to='icons/256x/%Y/%m/%d', blank=True)
-
     color = models.CharField(blank=True, max_length=7)
 
     class Meta:

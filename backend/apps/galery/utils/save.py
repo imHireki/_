@@ -4,23 +4,10 @@ from datetime import datetime
 from .image import scrap_image
 
 
-def before_save(data):
-    time_now = datetime.now(tz=timezone.utc)
-    time_str = datetime.strftime(time_now, '%H%M%S%f')
-    datetime_str = datetime.strftime(time_now, '%Y%m%d%H%M%S%f')
-   
-    #if not data.created_at:
-    #   data.created_at = time_now 
-
-    if not data.image_256x:
-        data.image, data.image_256x, data.color = scrap_image(
-            image=data.image,
-            time=time_str
+def before_save(instance):
+    if not instance.image_256x:
+        instance.image, instance.image_256x, instance.color = scrap_image(
+            image=instance.image,
+            time=datetime.strftime(datetime.now(tz=timezone.utc), '%H%M%S%f')
         )
-    
-    #if not data.name:
-    #   data.name = datetime_str
-
-    #if not data.slug:
-    #   data.slug = datetime_str
 
