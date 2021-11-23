@@ -30,7 +30,7 @@ class UploadIconImageSerializer(serializers.Serializer):
 
         # User
         if not user_id:
-            raise serializers.ValidationError({"detail": "Cum"})
+            raise serializers.ValidationError({"detail": "invalid data"})
         
         validated_data['user'] = User.objects.filter(
             pk=user_id
@@ -53,7 +53,7 @@ class UploadIconImageSerializer(serializers.Serializer):
             icon = Icon.objects.create(**validated_data) 
         else: 
             icon = Icon.objects.filter(pk=icon_id).first()
-        
+        pprint.pprint(icon.__dict__) 
         # Create the object with it
         iconimage = IconImage.objects.create(
             image=image,

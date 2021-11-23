@@ -11,7 +11,7 @@ from io import BytesIO
 from os.path import splitext
 from random import choice
 
-from apps.galery.models import Icon
+from apps.galery.models import Icon, IconImage
 
 
 def get_img_file(url, img_name): 
@@ -25,46 +25,41 @@ def get_img_file(url, img_name):
     bytes_img = request_img.content
     img_io = BytesIO(bytes_img)
     return ImageFile(img_io, name=img_name)
-    
-def save_data(title, image, border, edit):
-    user = get_user_model().objects.get(username='admin')
 
-    icon = Icon(
-        user=user,
-        name=title,
-        image=image,
-        has_border=border,
-        has_edit=edit,
-        color='ph',
-        )
+def save_data(data):
+    images = data.pop('images')
+    icon = Icon.objects.create(**data) 
 
-    icon.save()
+    for image in images:
+        IconImage.objects.create(
+            icon=icon,
+            image=image
+            )
 
 def populate_model():
     # get data from json 
-    file = open('data.json', 'r')
+    file = open('data_2.json', 'r')
     data = json.load(file)
     file.close()
  
+    User = get_user_model()
+    user = User.objects.filter(id=1).first()
+
     for key, value in data.items():
-        # Set data
-        title = value['title']
-        image_url = value['image']
-        
-        name  =  splitext(image_url)[0].split('/')[4:]
-        img_name = f"{''.join(name)}.jpg" # Must has file ext
-        image = get_img_file(image_url, img_name)
-       
+        url_images = value['images'] 
+        images = []
+        for image_url in url_images:
+            name = splitext(image_url)[0].split('/')[4:]
+            img_name = f"{''.join(name)}.jpg" # Must has file ext
+            image = get_img_file(image_url, img_name)
+            images.append(image) 
+
         border = choice([True, False])
-        edit = choice([True, False])
-        # Save data
-        try:
-            save_data(
-                title,
-                image,
-                border,
-                edit
-                )
-        except Exception as e:
-            print(e)
- 
+        edit = choice([True, False]) # Save data
+
+        save_data({'name': value['title'],
+                   'user': user,
+                   'has_border': border,
+                   'has_edit': edit,
+                   'images': images})
+
