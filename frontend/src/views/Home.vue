@@ -121,37 +121,38 @@
             hover
           >
             <v-carousel
-              hide-delimiter-background
+              :hide-delimiter-background="true"
+              :hide-delimiters="check_len_images(icon.images)"
               :show-arrows="false"
               height="auto"
             >
-            <v-carousel-item
-              v-for="image in icon.images"
-              :key="image.id"
-             >
-              <v-img
-                class="rounded-circle"
-                :style="{'background-color': image.color}"
-                alt=""
-                :src="image.get_image_256x"
-                :aspect-ratio="1/1"
-                contain
-              >
-                <template v-slot:placeholder>
-                  <v-row
-                    class="fill-height ma-0"
-                    align="center"
-                    justify="center"
-                  >
-                    <v-progress-circular
-                      indeterminate
-                      color="red accent-3"
-                    ></v-progress-circular>
-                  </v-row>
-                </template>
-              </v-img>
-            </v-carousel-item>
-          </v-carousel>
+              <v-carousel-item
+                v-for="image in icon.images"
+                :key="image.id"
+               >
+                <v-img
+                  class="rounded-circle"
+                  :style="{'background-color': image.color}"
+                  alt=""
+                  :src="image.get_image_256x"
+                  :aspect-ratio="1/1"
+                  contain
+                >
+                  <template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="red accent-3"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
+              </v-carousel-item>
+            </v-carousel>
 
             <v-card-title
               class="text-h5  text-truncate"
@@ -271,6 +272,13 @@
                   }
 
               }        
+          },
+          check_len_images(images) {
+            if(images.length > 1) {
+              return false
+            } else {
+              return true
+            }
           } 
       },
       beforeMount() {
