@@ -25,6 +25,7 @@ class IconImageSerializer(ModelSerializer):
         fields = [
             'id',
             'get_image',
+            'color',
             'get_image_256x',
             ]
 

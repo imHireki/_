@@ -114,33 +114,44 @@
           lg="3"
           xl="2" 
         >
+
           <v-card
             class="pa-2 ma-1"
             shaped
             hover
           >
-            <v-img
-              class="rounded-circle"
-              :style="{'background-color': icon.color}"
-              alt=""
-              :src="icon.get_small_image"
-              :aspect-ratio="1/1"
-              contain
+            <v-carousel
+              hide-delimiter-background
+              :show-arrows="false"
+              height="auto"
             >
-              <template v-slot:placeholder>
-                <v-row
-                  class="fill-height ma-0"
-                  align="center"
-                  justify="center"
-                >
-                  <v-progress-circular
-                    indeterminate
-                    color="red accent-3"
-                  ></v-progress-circular>
-                </v-row>
-              </template> 
-
-            </v-img>
+            <v-carousel-item
+              v-for="image in icon.images"
+              :key="image.id"
+             >
+              <v-img
+                class="rounded-circle"
+                :style="{'background-color': image.color}"
+                alt=""
+                :src="image.get_image_256x"
+                :aspect-ratio="1/1"
+                contain
+              >
+                <template v-slot:placeholder>
+                  <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                  >
+                    <v-progress-circular
+                      indeterminate
+                      color="red accent-3"
+                    ></v-progress-circular>
+                  </v-row>
+                </template>
+              </v-img>
+            </v-carousel-item>
+          </v-carousel>
 
             <v-card-title
               class="text-h5  text-truncate"
@@ -270,3 +281,9 @@
       },
   }
 </script>
+
+<style> /* <-- remove scoped here if you have it*/
+   .v-carousel__controls__item{
+      color: #FF1744 !important
+   }
+</style>
