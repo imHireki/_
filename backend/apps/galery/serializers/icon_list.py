@@ -23,6 +23,7 @@ class IconImageSerializer(ModelSerializer):
     class Meta:
         model = IconImage
         fields = [
+            'id',
             'get_image',
             'get_image_256x',
             ]

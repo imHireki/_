@@ -3,6 +3,8 @@ from django.core.files.images import ImageFile
 from django.core.files import File
 
 from django.contrib.auth import get_user_model
+from datetime import datetime
+from django.utils import timezone
 
 from random import randrange
 import json
@@ -10,7 +12,7 @@ import requests
 from io import BytesIO
 from os.path import splitext
 from random import choice
-
+from time import sleep
 from apps.galery.models import Icon, IconImage
 
 
@@ -36,9 +38,9 @@ def save_data(data):
             image=image
             )
 
-def populate_model():
+def pm():
     # get data from json 
-    file = open('data_2.json', 'r')
+    file = open('data_3.json', 'r')
     data = json.load(file)
     file.close()
  
@@ -46,7 +48,8 @@ def populate_model():
     user = User.objects.filter(id=1).first()
 
     for key, value in data.items():
-        url_images = value['images'] 
+        url_images = value['image'] 
+
         images = []
         for image_url in url_images:
             name = splitext(image_url)[0].split('/')[4:]
@@ -56,10 +59,14 @@ def populate_model():
 
         border = choice([True, False])
         edit = choice([True, False]) # Save data
-
+        
+        slug = datetime.strftime(datetime.now(tz=timezone.utc),
+                                 '%Y%m%d%H%M%S%f'
+                                 )
         save_data({'name': value['title'],
                    'user': user,
                    'has_border': border,
                    'has_edit': edit,
-                   'images': images})
+                   'images': images,
+                   'slug': slug})
 
