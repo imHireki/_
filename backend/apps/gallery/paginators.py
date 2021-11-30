@@ -1,5 +1,5 @@
 """
-app galery paginators
+app gallery paginators
 """
 from rest_framework import pagination
  

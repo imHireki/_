@@ -1,5 +1,5 @@
 """
-app galery URL Configuration
+app gallery URL Configuration
 """
 from django.urls import path
 from . import views

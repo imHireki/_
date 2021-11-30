@@ -1,5 +1,5 @@
 """
-app galery api views 
+app gallery api views 
 """
 from rest_framework.generics import ListAPIView, ListCreateAPIView, CreateAPIView
 from rest_framework.response import Response

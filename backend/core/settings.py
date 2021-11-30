@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     'djoser',
 
     # Apps
-    'apps.galery',
+    'apps.gallery',
     'apps.account',
 ]
 

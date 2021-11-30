@@ -23,7 +23,7 @@ urlpatterns = [
     path('__debug__/', include(debug_toolbar.urls)),
 
     # Api v1
-    path('api/v1/', include('apps.galery.urls')),
+    path('api/v1/', include('apps.gallery.urls')),
 
     # MEDIA: Bind media URL to its files 
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

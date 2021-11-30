@@ -1,5 +1,5 @@
 """
-app galery Models
+app gallery Models
     - Icon
 """
 from django.contrib.auth import get_user_model

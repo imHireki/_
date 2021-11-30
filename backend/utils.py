@@ -13,7 +13,7 @@ from io import BytesIO
 from os.path import splitext
 from random import choice
 from time import sleep
-from apps.galery.models import Icon, IconImage
+from apps.gallery.models import Icon, IconImage
 
 
 def get_img_file(url, img_name): 
@@ -40,7 +40,7 @@ def save_data(data):
 
 def pm():
     # get data from json 
-    file = open('data_3.json', 'r')
+    file = open('data.json', 'r')
     data = json.load(file)
     file.close()
  
@@ -52,6 +52,7 @@ def pm():
 
         images = []
         for image_url in url_images:
+            if '.gif' in image_url: continue
             name = splitext(image_url)[0].split('/')[4:]
             img_name = f"{''.join(name)}.jpg" # Must has file ext
             image = get_img_file(image_url, img_name)

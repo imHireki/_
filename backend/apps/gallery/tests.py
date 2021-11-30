@@ -1,5 +1,5 @@
 """
-app galery tests
+app gallery tests
 """
 from django.test import TestCase
 from django.core.files.images import ImageFile
