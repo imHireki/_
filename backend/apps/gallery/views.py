@@ -41,8 +41,8 @@ class SearchIconView(GenericAPIView):
             ).select_related('user').prefetch_related('images'
             ).filter(name__icontains=self.query)
 
-    def get(self, request, format=None):
-        self.query = request.GET.get('query', '')
+    def post(self, request, format=None):
+        self.query = request.data.get('query', '')
 
         if not self.query:
             return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -50,7 +50,7 @@ class SearchIconView(GenericAPIView):
         queryset = self.get_queryset() 
 
         if not queryset:
-            return Response({'detail': 'no icons found'},
+            return Response({'icons': []},
                             status=status.HTTP_404_NOT_FOUND
                             )
         page = self.paginate_queryset(queryset)
@@ -61,3 +61,4 @@ class SearchIconView(GenericAPIView):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
     
+
