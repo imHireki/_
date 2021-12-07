@@ -3,7 +3,7 @@
     cols="6"
     md="3"
     lg="3"
-    xl="2" 
+    xl="2"
   >
     <v-card
       class="pa-2 ma-1"
@@ -19,7 +19,8 @@
         <v-carousel-item
           v-for="image in icon.images"
           :key="image.id"
-         >
+        >
+
           <v-img
             class="rounded-circle"
             :style="{'background-color': image.color}"
@@ -41,29 +42,34 @@
               </v-row>
             </template>
           </v-img>
+
         </v-carousel-item>
       </v-carousel>
 
       <v-card-title
-        class="text-h5  text-truncate"
+        class="text-h5  text-truncate px-0 py-1"
         style="max-width: 100%"
       >
-        oi{{ icon.name }}
+        {{ icon.name }}
       </v-card-title>
 
-
       <v-card-actions>
-        <v-list-item class="grow px-2">
+        <v-list-item class="grow pa-0">
+
           <v-list-item-avatar
-            :color="icon.color"
+            color="grey darken-3"
+            v-for="image in icon.images.slice(0, 1)"
+            :key="image.id"
           >
-          <!-- TODO: add avatar -->
+            <v-img
+              class="rounded-circle"
+              :src="image.get_image_256x"
+            >
+            </v-img>
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title>
-              {{ icon.user.username }}
-            </v-list-item-title>
+            <v-list-item-title>{{ icon.user.username }}</v-list-item-title>
           </v-list-item-content>
 
           <v-row
@@ -73,15 +79,15 @@
             <v-icon class="mr-1" color="red accent-3">
               mdi-heart
             </v-icon>
-
           </v-row>
-
         </v-list-item>
+
       </v-card-actions>
     </v-card>
 
   </v-col>
 </template>
+
 <script>
 export default {
   name: 'IconBox',
