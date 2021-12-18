@@ -13,6 +13,7 @@ from rest_framework import status
 
 
 from django.http import Http404
+from django.shortcuts import get_object_or_404
 
 from .paginators import IconPagination
 from .models import Icon, IconImage
@@ -60,5 +61,13 @@ class SearchIconView(GenericAPIView):
         
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
-    
 
+
+class IconDetailView(APIView):
+    def get(self, request, slug, format=None):
+        icon = self.get_object(slug)
+        serializer = IconSerializer(icon)
+        return Response(serializer.data)
+
+    def get_object(self, slug):
+        return get_object_or_404(Icon, slug=slug)
