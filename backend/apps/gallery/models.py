@@ -29,6 +29,9 @@ class Icon(models.Model):
     def __str__(self):
         return self.name
 
+    def get_icon_url(self):
+       return f'icon/{self.slug}'
+
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         

@@ -44,5 +44,6 @@ class IconSerializer(ModelSerializer):
             'has_edit',
             'user',
             'images',
+            'get_icon_url'
             ]
 
