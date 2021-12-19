@@ -77,7 +77,11 @@
         class="text-h5  text-truncate px-0 py-1"
         style="max-width: 100%"
       >
-        {{ icon.name }}
+        <router-link style="text-decoration: none; color: inherit;"
+          :to="icon.get_icon_url"
+        >
+          {{ icon.name }}
+        </router-link>
       </v-card-title>
 
       <v-card-actions>
