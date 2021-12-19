@@ -15,7 +15,6 @@
             >
 
                 <v-img
-                class="rounded-circle"
                 :style="{'background-color': image.color}"
                 alt=""
                 :src="image.get_image_256x"
