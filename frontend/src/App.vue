@@ -157,4 +157,7 @@ export default {
   .v-carousel__controls__item{
     color: #FF1744 !important
   }
+ .v-overlay__scrim{
+    opacity: 0 !important
+  }
 </style>
