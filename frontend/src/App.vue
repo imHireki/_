@@ -10,7 +10,8 @@
       >
         <!-- TITLE -->
         <v-toolbar-title
-          class="title mr-5">
+          class="title mr-5"
+        >
           <v-btn
             class="ma-2"
             text
@@ -64,6 +65,7 @@
         v-model="drawer"
         app
         width="300"
+        height="100%"
       >
         <v-navigation-drawer
           v-model="drawer"
@@ -159,5 +161,5 @@ export default {
   }
  .v-overlay__scrim{
     opacity: 0 !important
-  }
+ }
 </style>
