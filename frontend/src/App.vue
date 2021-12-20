@@ -12,20 +12,25 @@
         <v-toolbar-title
           class="title mr-5"
         >
-          <v-btn
-            class="ma-2"
-            text
-            icon
-          >
-            <v-icon
-              color="red accent-3"
-              x-large
-            >mdi-wizard-hat
-            </v-icon>
-          </v-btn>
+         <router-link
+           to="/"
+           style="text-decoration: none; color: inherit;"
+         >
+            <v-btn
+              class="ma-2"
+              text
+              icon
+            >
+              <v-icon
+                color="red accent-3"
+                x-large
+              >mdi-wizard-hat
+              </v-icon>
+            </v-btn>
 
-          Yamerooo
-        </v-toolbar-title> 
+            Yamerooo
+          </router-link>
+        </v-toolbar-title>
         <!-- / TITLE -->
 
         <!-- SEARCH -->
@@ -43,13 +48,15 @@
                 class="grey lighten-2"
                 name="query"
               >
-                <v-icon
-                  slot="append"
-                  color="red accent-3"
-                  @click.stop="drawer = !drawer"
-                >
-                  mdi-magnify
-                </v-icon> 
+
+                <button slot="append">
+                  <v-icon
+                    color="red accent-3"
+                  >
+                    mdi-magnify
+                  </v-icon>
+                </button>
+
               </v-text-field>
             </v-form>
 
