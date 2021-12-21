@@ -7,6 +7,7 @@ from django.db import models
 
 
 class UserManager(BaseUserManager):
+
     ...
 
 class User(AbstractBaseUser):
@@ -14,21 +15,15 @@ class User(AbstractBaseUser):
     Main project's User model (AbstractBaseUser)
 
     ABU_FIELDS = `last_login`, `password`
+
+    TODO: create a relationship to different sizes of icon
+    TODO: use the email to set the username
     """
-
-    # main combination `email` & `password`
     email = models.EmailField(max_length=255, unique=True)
-
-    # username 4 show to others. No needed. Can be made out of the email
-    # TODO: fill it with the email
     username = models.CharField(max_length=30, blank=True)
-
-    # TODO: create a relationship to different sizes of icon
-    icon = models.ImageField(upload_to=...)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['email']  # and password
-
 
     class Meta:
         ordering = ['username']
