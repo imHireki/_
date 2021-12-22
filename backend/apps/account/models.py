@@ -10,12 +10,12 @@ class UserManager(BaseUserManager):
     def create_user(self, email, password=None):
         user = self.model(email=self.normalize_email(email))
         user.set_password(password)
-        user.save()
+        user.save(using=self._db)
 
     def create_superuser(self, email, password=None):
         user = self.model(email=self.normalize_email(email))
         user.set_password(password)
-        user.save()
+        user.save(using=self._db)
 
 
 class User(AbstractBaseUser):
@@ -31,7 +31,6 @@ class User(AbstractBaseUser):
     username = models.CharField(max_length=30, blank=True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['email']  # and password
 
     class Meta:
         ordering = ['username']
