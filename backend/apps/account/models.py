@@ -1,19 +1,23 @@
 """
 app account models
-    - User (AbstractUser) 
+    - User (AbstracBaseUser)
 """
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 
 
 class UserManager(BaseUserManager):
+    """ Manage the creation of the User objects """
+
     def create_user(self, email, password=None, **kwargs):
+        """ Normalize email and take care of the pass """
         user = self.model(email=self.normalize_email(email), **kwargs)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
     def create_superuser(self, email, password=None):
+        """ The same as create_user, also set is_staff to True """
         return self.create_user(email=email, password=password, is_staff=True)
 
 
@@ -24,14 +28,9 @@ class User(AbstractBaseUser):
     ABU_FIELDS = `last_login`, `password`
 
     is_staff needed to see the auth/users/
-
-    TODO: create a relationship to different sizes of icon
-    TODO: use the email to set the username
-    TODO: add icon
     """
     email = models.EmailField(max_length=255, unique=True)
     username = models.CharField(max_length=30, blank=True)
-
     is_staff = models.BooleanField(default=False)
 
     objects = UserManager()
