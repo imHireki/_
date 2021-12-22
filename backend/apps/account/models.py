@@ -2,7 +2,7 @@
 app account models
     - User (AbstractUser) 
 """
-from django.contrib.auth.models import AbstractUser, AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 
 
@@ -11,6 +11,12 @@ class UserManager(BaseUserManager):
         user = self.model(email=self.normalize_email(email))
         user.set_password(password)
         user.save()
+
+    def create_superuser(self, email, password=None):
+        user = self.model(email=self.normalize_email(email))
+        user.set_password(password)
+        user.save()
+
 
 class User(AbstractBaseUser):
     """
