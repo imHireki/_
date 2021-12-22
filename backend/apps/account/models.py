@@ -30,6 +30,8 @@ class User(AbstractBaseUser):
     email = models.EmailField(max_length=255, unique=True)
     username = models.CharField(max_length=30, blank=True)
 
+    objects = UserManager()
+
     USERNAME_FIELD = 'email'
 
     class Meta:
