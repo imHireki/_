@@ -4,6 +4,7 @@ app account models
 """
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
+from re import split
 
 
 class UserManager(BaseUserManager):
@@ -42,3 +43,14 @@ class User(AbstractBaseUser):
 
     def __str__(self):
         return self.email
+
+    # TODO: check if args & kwargs are needed
+    def save(self, *args, **kwargs):
+
+        if not self.username:
+            # email part before the @ as username
+            self.username = split('@', self.email)[0]
+
+        return super().save(*args, **kwargs)
+
+class UserIcon(models.Model): ...
