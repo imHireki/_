@@ -33,6 +33,10 @@ class User(AbstractBaseUser):
     email = models.EmailField(max_length=255, unique=True)
     username = models.CharField(max_length=30, blank=True)
     is_staff = models.BooleanField(default=False)
+    icon_128x = models.ImageField(upload_to='icons/users/128/%Y/%m/%d',
+                                  blank=True, null=True)
+    icon_256x = models.ImageField(upload_to='icons/users/256/%Y/%m/%d',
+                                  blank=True, null=True)
 
     objects = UserManager()
 
@@ -52,5 +56,3 @@ class User(AbstractBaseUser):
             self.username = split('@', self.email)[0]
 
         return super().save(*args, **kwargs)
-
-class UserIcon(models.Model): ...
