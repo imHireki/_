@@ -21,8 +21,9 @@ def get_img_file(url, img_name):
     
     # Thrown exception if problem with image request
     if request_img.status_code != 200:
-        raise Exception(f'status: {request_img.status_code}')
-    
+        # raise Exception(f'status: {request_img.status_code}')
+        return None
+
     # File management
     bytes_img = request_img.content
     img_io = BytesIO(bytes_img)
@@ -51,19 +52,27 @@ def pm():
         url_images = value['image'] 
 
         images = []
+
         for image_url in url_images:
+
+            # Not handling GIF for now...
             if '.gif' in image_url: continue
+
             name = splitext(image_url)[0].split('/')[4:]
             img_name = f"{''.join(name)}.jpg" # Must has file ext
             image = get_img_file(image_url, img_name)
+
+            # haven't receive a 200 response
+            if not image: continue
+
             images.append(image) 
 
         border = choice([True, False])
         edit = choice([True, False]) # Save data
         
         slug = datetime.strftime(datetime.now(tz=timezone.utc),
-                                 '%Y%m%d%H%M%S%f'
-                                 )
+                                 '%Y%m%d%H%M%S%f')
+
         save_data({'name': value['title'],
                    'user': user,
                    'has_border': border,
