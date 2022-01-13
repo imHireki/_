@@ -37,25 +37,40 @@ class Icon(models.Model):
         
 
 class IconImage(models.Model):
-    icon = models.ForeignKey(
-        to=Icon,
-        related_name='images',
-        on_delete=models.CASCADE,
-        ) # Restrict ?
+    icon = models.ForeignKey(to=Icon,
+                             related_name='images',
+                             on_delete=models.CASCADE)
+
+    # Original Image. NOTE: Do not modify. Base to all other sizes.
     image = models.ImageField(upload_to='icons/full/%Y/%m/%d')
-    image_256x = models.ImageField(upload_to='icons/256x/%Y/%m/%d', blank=True)
+
+    image_512x = models.ImageField(upload_to='icons/512x/%Y/%m/%d/', blank=True)
+    image_256x = models.ImageField(upload_to='icons/256x/%Y/%m/%d/', blank=True)
+    image_128x = models.ImageField(upload_to='icons/128x/%Y/%m/%d/', blank=True)
+    image_80x = models.ImageField(upload_to='icons/80x/%Y/%m/%d/', blank=True)
+
     color = models.CharField(blank=True, max_length=7)
 
     class Meta:
-        ordering = ['-icon'] # end up being -created-at
-    
-    # Add __str__
+        ordering = ['-icon']
+
+    def __str__(self):
+        return 'Image {} from Icon {}'.format(self.pk, self.icon)
  
     def get_image(self):
-        return f'{BACKEND_URL}{self.image.url}'
+        return '{}{}'.format(BACKEND_URL, self.image.url)
+
+    def get_image_512x(self):
+        return '{}{}'.format(BACKEND_URL, self.image_512x.url)
 
     def get_image_256x(self):
-        return f'{BACKEND_URL}{self.image_256x.url}'
+        return '{}{}'.format(BACKEND_URL, self.image_256x.url)
+
+    def get_image_128x(self):
+        return '{}{}'.format(BACKEND_URL, self.image_128x.url)
+
+    def get_image_80x(self):
+        return '{}{}'.format(BACKEND_URL, self.image_80x.url)
 
     def save(self, *args, **kwargs):
         before_save(self)
