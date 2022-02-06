@@ -1,18 +1,16 @@
 """
 Django settings for core project.
 """
-
-from .utils import get_secret
 from pathlib import Path
 import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = get_secret('SECRET_KEY')
+SECRET_KEY = os.getenv('YAMERO_BACKEND_SECRET_KEY')
 
 DEBUG = True
 
-BACKEND_URL = get_secret('BACKEND_URL')
+BACKEND_URL = os.getenv('YAMERO_BACKEND_URL')
 
 ALLOWED_HOSTS = []
 
